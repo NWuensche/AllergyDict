@@ -1,18 +1,14 @@
 package niklas.app.allergydictionary;
 
 import android.app.AlertDialog;
-import android.app.Notification;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.DialogPreference;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.internal.view.menu.ActionMenuItemView;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -29,12 +25,9 @@ import java.util.Locale;
 public class MainActivity extends ActionBarActivity {
 
     Integer SpracheID = -1;
-    String LandItemText = "";
     String WeiterButtonText = "";
     String UeberItemText = "";
     ArrayList<String> Items;
-    ActionMenuItemView Weiter;
-    ActionMenuItemView Ueber ;
     Integer InhaltArray = 1;
     LinearLayout Liste;
     String BeendenBText = "";
@@ -44,19 +37,15 @@ public class MainActivity extends ActionBarActivity {
 
     Thre t = new Thre();
     String LänderAuslandName;
-    int p = 0;
     int AnzahlAllergene = 21;
-    TextView ttt = null;
-    int Erstes;
     int[] woRot = new int[AnzahlAllergene];
     boolean ErstesmalAllergene = true;
 
-    String[] LänderNutzer;
-    String[] LänderAusland;
 
+    // TODO Datenbank
     String[] AllergeneNutzer;
-
-    //TODO Hazel bzw. alles durchgu
+    String[] AllergeneAusland;
+    String[] LänderNutzer;
 
     String[] AllergeneDeutschland = { "Haselnuss", "Walnuss", "Erdnuss", "Paranuss", "Cashewnuss", "Macadamia", "Mandel", "Pistazie", "Gluten","Krebstiere","Ei","Fisch","Soja","Milchprodukte", "Schalenfrüchte","Sellerie","Senf","Sesam","Schwefel","Lupinen","Weichtiere"};
     String[] AllergeneEngland = {"hazelnut", "walnut", "peanut", "Brazil nut", "cashew", "macadamia", "almond", "pistachio", "gluten", "crustacean", "egg", "fish", "soy","Dairy","Nuts","Celery","Mustard","Sesame","Sulfur","Lupine","Mollusc"};
@@ -85,11 +74,6 @@ public class MainActivity extends ActionBarActivity {
     String[] AllergeneArabien = {"بندق", "خشب الجوز", "الفول السوداني", "البرازيل الجوز", "الكاجو", "المكاديميا", "اللوز", "الفستق", "الغلوتين", "القشريات", "البيضة", "الأسماك", "الصويا "," منتجات الألبان "," المكسرات "," الكرفس "," الخردل "," السمسم "," الكبريت "," الترمس "," الرخويات "};
     String[] AllergeneChina = {"榛子","核桃","花生","巴西果","腰果","夏威夷","杏仁","开心果","面筋","甲壳","蛋","鱼","酱油","乳制品","坚果","芹菜","榨菜","芝麻","硫磺","鲁冰花","软体动物"};
     String[] AllergeneJapan = {"ヘーゼルナッツ","ウォールナット","ピーナッツ","ブラジルナッツ","カシュー","マカダミア","アーモンド","ピスタチオ","グルテン","甲殻類","たまご","魚","大豆","乳製品","ナッツ","セロリ","マスタード","ゴマ","硫黄","ルピナス","軟体動物"};
-
-    String[] AllergeneAusland;
-
-
-
 
     String[] LänderDeutschland = { "Deutschland","England","Frankreich","Spanien","Portugal", "Italien","Dänemark","Schweden", "Norwegen", "Finnland", "Niederlande","Türkei", "Kroatien","Griechenland","Ungarn", "Russland", "Tschechien", "Slowakei", "Slowenien", "Polen",  "Bulgarien","Arabien", "China", "Japan"};
     String[] LänderEngland ={"Germany", "England", "France", "Spain", "Portugal", "Italy", "Denmark", "Sweden", "Norway", "Finland", "Netherlands", "Turkey", "Croatia","Greece","Hungary","Russia","Czech Republic","Slovakia","Slovenia","Poland","Bulgaria","Arabia","China","Japan"};
@@ -121,46 +105,18 @@ public class MainActivity extends ActionBarActivity {
     String[] LänderChina ={"德国","英格兰","法国","西班牙","葡萄牙","意","丹麦","瑞典","挪威","芬兰","荷兰","土耳其","克罗地亚","希腊","匈牙利","俄罗斯","捷","斯洛伐克","斯洛文尼亚","波兰","保加利亚","阿拉伯","中国","日本制造"};
     String[] LänderJapan ={"ドイツ","イングランド","フランス","スペイン","ポルトガル","イタリア","デンマーク","スウェーデン","ノルウェー","フィンランド","オランダ","トルコ","クロアチア","ギリシャ","ハンガリー","ロシア","チェコ","スロバキア","スロベニア","ポーランド","ブルガリア","アラビア","中国","日本"};
 
-
-
-
-
-    //TODO abfangen, welche Allergene markiert (Textview erben und noch eine getID methode dazu, die bei construktur dazu)
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-        //Weiter.setTitle("T");
-
 
         setContentView(R.layout.activity_main);
         Liste = (LinearLayout) findViewById(R.id.ListeID);
         Liste.setGravity(View.TEXT_ALIGNMENT_CENTER);
 
-        // setContentView(Liste);
-        //Liste.setOrientation(LinearLayout.VERTICAL);
-
         t.execute();
-        /*Liste.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                SpracheID = position;
-                InhaltArray = 2;
-                //t.execute();
-
-
-            }
-        });*/
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        LayoutInflater inflater = MainActivity.this.getLayoutInflater();
-
-            //AlertDialog.Builder Dia = new AlertDialog.Builder(getApplicationContext());
 
             switch (Locale.getDefault().getLanguage()) {
                 case "de":
@@ -186,11 +142,6 @@ public class MainActivity extends ActionBarActivity {
                             .create().show();
                     break;
 
-
-
-                // Ueber = (ActionMenuItemView) findViewById(R.id.action_ueber);
-
-
         }
     }
 
@@ -209,7 +160,6 @@ public class MainActivity extends ActionBarActivity {
         setwoRotNull();
 
         Liste.removeAllViews();
-        // TODO Case of
 
         switch(Locale.getDefault().getLanguage()){
             case "de":
@@ -387,16 +337,11 @@ public class MainActivity extends ActionBarActivity {
                 UeberItemText = "About";
                 BeendenBText = "Close";
                 break;
-
-
-
         }
-
 
         for(String s : LänderNutzer){
             Items.add(s);
         }
-
 
     }
 
@@ -410,7 +355,6 @@ public class MainActivity extends ActionBarActivity {
         else if (InhaltArray == 3){
             setArrayListAusland();
         }
-
     }
 
     void setArrayListAusland(){
@@ -491,14 +435,9 @@ public class MainActivity extends ActionBarActivity {
                 break;
             default:
                 AllergeneAusland = AllergeneEngland;
-
-
-
         }
         String sPuffer = "";
-        //try {
             for (String s : AllergeneAusland) {  // TODO LänderAusland
-                sPuffer = s;
                 if (woRot[id] == 1) {
 
                     Items.add(s + "  (" + AllergeneNutzer[id] + ")");// TODO eigenene Ländernamen rein
@@ -507,15 +446,6 @@ public class MainActivity extends ActionBarActivity {
                 }
                 id++;
             }
-
-       // }
-        /*catch ( Exception e){
-            Log.e("s", sPuffer);
-            Log.e("id",""+ id);
-            Log.e("AllergeneNutzer", AllergeneNutzer[id]);
-        }*/
-
-
     }
 
 
@@ -523,125 +453,33 @@ public class MainActivity extends ActionBarActivity {
     void setArrayListItems() {
         Items.clear();
         setwoRotNull();
-        //Weiter.setVisibility(View.VISIBLE);
         Liste.removeAllViews();
         // TODO Untergruppen alphabetisch ordnen
         // TODO Mehrfachauswahl
         // TODO Sprache --> Anderes Zeug in Array
 
-       /*  switch (Locale.getDefault().getLanguage()) {
-           case "de":
-                AllergeneNutzer = AllergeneDeutschland;
-                break;
-            case "en":
-                AllergeneNutzer = AllergeneEngland;
-                break;
-            case "fr":
-                AllergeneNutzer = AllergeneFrankreich;
-                break;
-            case "es":
-                AllergeneNutzer = AllergeneSpanien;
-                break;
-            case "pt":
-                AllergeneNutzer = AllergenePortugal;
-                break;
-            case "it":
-                AllergeneNutzer = AllergeneItalien;
-                break;
-            case "da":
-                AllergeneNutzer = AllergeneDänemark;
-                break;
-            case "sv":
-                AllergeneNutzer = AllergeneSchweden;
-                break;
-            case "no":
-                AllergeneNutzer = AllergeneNorwegen;
-                break;
-            case "fi":
-                AllergeneNutzer = AllergeneFinnland;
-                break;
-            case "nl":
-                AllergeneNutzer = AllergeneNiederlande;
-                break;
-            case "tr":
-                AllergeneNutzer = AllergeneTürkei;
-                break;
-            case "hr":
-                AllergeneNutzer = AllergeneKroatien;
-                break;
-            case "el":
-                AllergeneNutzer = AllergeneGriechenland;
-                break;
-            case "hu":
-                AllergeneNutzer = AllergeneUngarn;
-                break;
-            case "ru":
-                AllergeneNutzer = AllergeneRussland;
-                break;
-            case "sk":
-                AllergeneNutzer = AllergeneSlowakei;
-                break;
-            case "sl":
-                AllergeneNutzer = AllergeneSlowenien;
-                break;
-            case "pl":
-                AllergeneNutzer = AllergenePolen;
-                break;
-            case "bg":
-                AllergeneNutzer = AllergeneBulgarien;
-                break;
-            case "ar":
-                AllergeneNutzer = AllergeneArabien;
-                break;
-            case "zh":
-                AllergeneNutzer = AllergeneChina;
-                break;
-            case "ja":
-                AllergeneNutzer = AllergeneJapan;
-                break;
-            default:
-                AllergeneNutzer = AllergeneEngland;
-                break;
-
-
-        }*/
         for (String s : AllergeneNutzer) {
             Items.add(s);
         }
-
-
-        // Länder.add("Gluten"); // TODO Glutenhaltiges Getreide (Weizen, Roggen, Gerste, Hafer, Dinkel, Kamut oder Hybridstämme davon)
-
-
-        //  Länder.add("Milchprodukte"); // TODO Milch und Milchprodukte (einschließlich Laktose)
-
-        // Länder.add("Schalenfrüchte"); // TODO Schalenfrüchte (Mandel, Haselnuss, Walnuss, Cashew, Pecannuss, Paranuss, Pistazie, Macadamianuss und Queenslandnuss)
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
+
         else if (id == R.id.action_ueber){
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            LayoutInflater inflater = MainActivity.this.getLayoutInflater();
 
-
-            //AlertDialog.Builder UeberDia = new AlertDialog.Builder(getApplicationContext());
             builder.setTitle(UeberItemText)
                     .setMessage("Font by  Adobe: http://www.fontsquirrel.com/fonts/source-sans-pro \n Logo by")
                     .setPositiveButton("Back", new DialogInterface.OnClickListener() {
@@ -662,63 +500,24 @@ public class MainActivity extends ActionBarActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             mProgressDialog = new ProgressDialog(MainActivity.this);
-            // Set progressdialog title
             mProgressDialog.setTitle("Allergy");
-            // Set progressdialog message
             mProgressDialog.setMessage("Laden...");
             mProgressDialog.setIndeterminate(false);
-            // Show progressdialog
             mProgressDialog.show();
         }
 
         @Override
         protected Void doInBackground(Void... params) {
-
-
-
-
-            // TODO add Läder, die gleiche Sprache haben(Brasilien)
-
-            // TODO wenn draufgeklickt, dann farbe anders
-
-
-
-
             return null;
         }
-
-
 
         @Override
         protected void onPostExecute(Void result) {
             Items = new ArrayList<String>();
             setArrayList();
-            int woinArray = 0;
-           //super.onPostExecute(aVoid);
-            //Ueber = (ActionMenuItemView) findViewById(R.id.Tag);
 
               // TODO machen      Ueber.setTitle(UeberItemText);
 
-
-            //Liste = (ListView) findViewById(R.id.Liste);
-
-            //setContentView(Liste);
-
-
-            //Items = new ArrayList<String>();
-
-            // TODO Dialog, welches Land
-
-
-
-
-
-        //    Weiter = (ActionMenuItemView) findViewById(R.id.action_settings);
-
-          //  if(ErstesmalAllergene){
-              //  Weiter.setVisibility(View.INVISIBLE);
-
-          //  }
             Typeface Schrift = Typeface.createFromAsset(getAssets(),"SourceSansPro-Regular.ttf");
 
             if(!ErstesmalAllergene & InhaltArray != 3) {
@@ -748,8 +547,6 @@ public class MainActivity extends ActionBarActivity {
                             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                             LayoutInflater inflater = MainActivity.this.getLayoutInflater();
 
-
-                            //AlertDialog.Builder UeberDia = new AlertDialog.Builder(getApplicationContext());
                             switch (Locale.getDefault().getLanguage()) {
                                 case "de":
                                     builder.setTitle("Fehler")
@@ -787,8 +584,6 @@ public class MainActivity extends ActionBarActivity {
                 LandB.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
                 LandB.setTypeface(Schrift);
                 LandB.setTextSize(30);
-              //  Liste.addView(LandB);
-
 
             }
             if(InhaltArray == 3){
@@ -824,8 +619,6 @@ public class MainActivity extends ActionBarActivity {
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     LayoutInflater inflater = MainActivity.this.getLayoutInflater();
 
-
-                    //AlertDialog.Builder UeberDia = new AlertDialog.Builder(getApplicationContext());
                     builder.setTitle(UeberItemText)
                             .setMessage("Font by  Adobe: http://www.fontsquirrel.com/fonts/source-sans-pro \n Logo by")
                             .setPositiveButton("Back", new DialogInterface.OnClickListener() {
@@ -838,8 +631,6 @@ public class MainActivity extends ActionBarActivity {
 
                 }
             });
-
-           // Liste.addView(UeberB);
 
             int id = 0;
 
@@ -856,12 +647,6 @@ public class MainActivity extends ActionBarActivity {
                 TextV.setTypeface(Schrift);
                 TextV.setBackgroundResource(R.drawable.roundcorners);
                 TextV.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
-               /* if(woRot[woinArray] == 1){
-                    TextV.setTextColor(Color.RED);
-
-                }*/
-                //woinArray++;
-                // Weiter.setTitle("Weiter" );
                 Liste.addView(TextV);
                 TextV.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -886,9 +671,6 @@ public class MainActivity extends ActionBarActivity {
                             LänderAuslandName = TextV.getText().toString();
                             SpracheID = id2; // TODO geht das?
                             ErstesmalAllergene = false;
-                          //  ActionMenuItemView Land = (ActionMenuItemView) findViewById(R.id.action_land);
-//                            Land.setText(TextV.getText().toString());
-
                         }
 
                     }
@@ -896,36 +678,9 @@ public class MainActivity extends ActionBarActivity {
                 id++;
 
             }
-           // Ueber = (ActionMenuItemView) findViewById(R.id.action_ueber);
-           // Ueber.setText(UeberItemText);
-/*         Ueber.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    AlertDialog.Builder UeberDia = new AlertDialog.Builder(getApplicationContext());
-                    UeberDia.setTitle(UeberItemText)
-                            .setMessage("Font by  Adobe: http://www.fontsquirrel.com/fonts/source-sans-pro \n Logo by")
-                            .setPositiveButton("I Agree", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                }
-                            })
-                            .create();
-                }
-            });*/
-
 
             mProgressDialog.dismiss();
 
-
-
-            /*ArrayAdapter<String> Adapter = new ArrayAdapter<String>(MainActivity.this, R.layout.liste_item,R.id.liste_item,Länder);
-            Liste.setAdapter(Adapter);*/
-
-
-
         }
     }
-
-
 }
