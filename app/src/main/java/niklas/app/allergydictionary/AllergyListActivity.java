@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,15 +17,13 @@ import java.util.Locale;
 
 public class AllergyListActivity extends AppCompatActivity {
 
-    private ArrayList<String> items;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_allergy_list);
 
         ListView listView = findViewById(R.id.AllergyListView);
-        items = new ArrayList<>(Arrays.asList(DataStorage.AllergeneNutzer));
+        ArrayList<String>  items = new ArrayList<>(Arrays.asList(DataStorage.allergenesUser));
         //TODO Add Toolbar
 
 
@@ -48,7 +45,7 @@ public class AllergyListActivity extends AppCompatActivity {
         });
 
         Button b = findViewById(R.id.button);
-        b.setText(DataStorage.WeiterButtonText);
+        b.setText(DataStorage.nextButtonText);
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

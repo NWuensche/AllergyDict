@@ -1,10 +1,7 @@
 package niklas.app.allergydictionary;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -24,7 +21,7 @@ public class ResultActivity extends AppCompatActivity {
         findForeignAllergies();
 
         Button b = findViewById(R.id.exitButton);
-        b.setText(DataStorage.BeendenBText);
+        b.setText(DataStorage.exitButtonText);
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -36,7 +33,7 @@ public class ResultActivity extends AppCompatActivity {
 
         for(int i = 0; i < AllergeneAusland.length; i++) {
                 if(DataStorage.isMarked[i]) {
-                    items.add(AllergeneAusland[i] + "(" + DataStorage.AllergeneNutzer[i] + ")");
+                    items.add(AllergeneAusland[i] + "(" + DataStorage.allergenesUser[i] + ")");
                 }
         }
         ArrayAdapter<String> itemsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items);
@@ -46,7 +43,7 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     private void findForeignAllergies() {
-        switch (DataStorage.ForeignCountryID) {
+        switch (DataStorage.foreignCountryID) {
             case 0:
                 AllergeneAusland = DataStorage.AllergeneDeutschland;
                 break;

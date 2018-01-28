@@ -1,7 +1,6 @@
 package niklas.app.allergydictionary;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,25 +19,8 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    Integer SpracheID = -1;
-    ArrayList<String> Items;
-    Integer InhaltArray = 1;
-    ListView Liste;
-    boolean NichtsAusgewähltAllerge = true;
-
-    ProgressDialog mProgressDialog;
-
-   // Thre t = new Thre();
-    String LänderAuslandName;
-    int AnzahlAllergene = 21;
-    int[] woRot = new int[AnzahlAllergene];
-    boolean ErstesmalAllergene = true;
-    ArrayAdapter<String> itemsAdapter;
-
-
     // TODO Datenbank
-    String[] AllergeneAusland;
-
+    //TODO Neue APK + Bilder in App Store
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,16 +30,16 @@ public class MainActivity extends AppCompatActivity {
 
         DataStorage.setUpItemsByLanguage();
 
-        Liste = (ListView) findViewById(R.id.ListeID);
-        Items = new ArrayList<>(Arrays.asList(DataStorage.LänderNutzer));
+        ListView list = findViewById(R.id.ListeID);
+        ArrayList<String> items = new ArrayList<>(Arrays.asList(DataStorage.CountryUser));
 
-        itemsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, Items);
-        Liste.setAdapter(itemsAdapter);
-        Liste.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ArrayAdapter<String> itemsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items);
+        list.setAdapter(itemsAdapter);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(MainActivity.this, AllergyListActivity.class);
-                DataStorage.ForeignCountryID = (int) l;
+                DataStorage.foreignCountryID = (int) l;
                 startActivity(intent);
             }
         });
