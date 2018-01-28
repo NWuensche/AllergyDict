@@ -11,7 +11,6 @@ public class DataStorage {
     public static String[] AllergeneNutzer;
     public static String[] LänderNutzer;
     public static String WeiterButtonText;
-    public static String UeberItemText;
     public static String BeendenBText;
     public static int ForeignCountryID;
     public static boolean[] isMarked;
@@ -81,175 +80,150 @@ public class DataStorage {
                 LänderNutzer = LänderDeutschland;
                 AllergeneNutzer = AllergeneDeutschland;
                 WeiterButtonText = "Weiter";
-                UeberItemText = "Über";
                 BeendenBText = "Beenden";
                 break;
             case "en":
                 LänderNutzer = LänderEngland;
                 AllergeneNutzer = AllergeneEngland;
                 WeiterButtonText = "Continue";
-                UeberItemText = "About";
                 BeendenBText = "Close";
                 break;
             case "cs":
                 LänderNutzer = LänderTschechien;
                 AllergeneNutzer = AllergeneTschechien;
                 WeiterButtonText = "další";
-                UeberItemText = "o";
                 BeendenBText = "zavřít";
                 break;
             case "fr":
                 LänderNutzer = LänderFrankreich;
                 AllergeneNutzer = AllergeneFrankreich;
                 WeiterButtonText = "plus loin";
-                UeberItemText = "sur";
                 BeendenBText = "fermer";
                 break;
             case "es":
                 LänderNutzer = LänderSpanien;
                 AllergeneNutzer = AllergeneSpanien;
                 WeiterButtonText = "adicional";
-                UeberItemText = "Acerca de";
                 BeendenBText = "cerrar";
                 break;
             case "pt":
                 LänderNutzer = LänderPortugal;
                 AllergeneNutzer = AllergenePortugal;
                 WeiterButtonText = "mais";
-                UeberItemText = "Cerca de";
                 BeendenBText = "desligar";
                 break;
             case "it":
                 LänderNutzer = LänderItalien;
                 AllergeneNutzer = AllergeneItalien;
                 WeiterButtonText = "ulteriore";
-                UeberItemText = "Di";
                 BeendenBText = "fermare";
                 break;
             case "da":
                 LänderNutzer = LänderDänemark;
                 AllergeneNutzer = AllergeneDänemark;
                 WeiterButtonText = "yderligere";
-                UeberItemText = "Ca";
                 BeendenBText = "lukke ned";
                 break;
             case "sv":
                 LänderNutzer = LänderSchweden;
                 AllergeneNutzer = AllergeneSchweden;
                 WeiterButtonText = "ytterligare";
-                UeberItemText = "om";
                 BeendenBText = "stänga av";
                 break;
             case "no":
                 LänderNutzer = LänderNorwegen;
                 AllergeneNutzer = AllergeneNorwegen;
                 WeiterButtonText = "videre";
-                UeberItemText = "omtrent";
                 BeendenBText = "skru av";
                 break;
             case "fi":
                 LänderNutzer = LänderFinnland;
                 AllergeneNutzer = AllergeneFinnland;
                 WeiterButtonText = "edelleen";
-                UeberItemText = "noin";
                 BeendenBText = "sulkea";
                 break;
             case "nl":
                 LänderNutzer = LänderNiederlande;
                 AllergeneNutzer = AllergeneNiederlande;
                 WeiterButtonText = "verder";
-                UeberItemText = "over";
                 BeendenBText = "afsluiten";
                 break;
             case "tr":
                 LänderNutzer = LänderTürkei;
                 AllergeneNutzer = AllergeneTürkei;
                 WeiterButtonText = "ayrıca";
-                UeberItemText = "yaklaşık";
                 BeendenBText = "kapat";
                 break;
             case "hr":
                 LänderNutzer = LänderKroatien;
                 AllergeneNutzer = AllergeneKroatien;
                 WeiterButtonText = "dalje";
-                UeberItemText = "o";
                 BeendenBText = "ugasiti";
                 break;
             case "el":
                 LänderNutzer = LänderGriechenland;
                 AllergeneNutzer = AllergeneGriechenland;
                 WeiterButtonText = "περαιτέρω";
-                UeberItemText = "σχετικά με";
                 BeendenBText = "τέλος";
                 break;
             case "hu":
                 LänderNutzer = LänderUngarn;
                 AllergeneNutzer = AllergeneUngarn;
                 WeiterButtonText = "további";
-                UeberItemText = "körülbelül";
                 BeendenBText = "vég";
                 break;
             case "ru":
                 LänderNutzer = LänderRussland;
                 AllergeneNutzer = AllergeneRussland;
                 WeiterButtonText = "дальше";
-                UeberItemText = "около";
                 BeendenBText = "конец";
                 break;
             case "sk":
                 LänderNutzer = LänderSlowakei;
                 AllergeneNutzer = AllergeneSlowakei;
                 WeiterButtonText = "ďalšie";
-                UeberItemText = "O";
                 BeendenBText = "koniec";
                 break;
             case "sl":
                 LänderNutzer = LänderSlowenien;
                 AllergeneNutzer = AllergeneSlowenien;
                 WeiterButtonText = "nadalje";
-                UeberItemText = "O";
                 BeendenBText = "konec";
                 break;
             case "pl":
                 LänderNutzer = LänderPolen;
                 AllergeneNutzer = AllergenePolen;
                 WeiterButtonText = "dalej";
-                UeberItemText = "O";
                 BeendenBText = "koniec";
                 break;
             case "bg":
                 LänderNutzer = LänderBulgarien;
                 AllergeneNutzer = AllergeneBulgarien;
                 WeiterButtonText = "още";
-                UeberItemText = "около";
                 BeendenBText = "край";
                 break;
             case "ar":
                 LänderNutzer = LänderArabien;
                 AllergeneNutzer = AllergeneArabien;
                 WeiterButtonText = "إضافي";
-                UeberItemText = "حول";
                 BeendenBText = "النهاية";
                 break;
             case "zh":
                 LänderNutzer = LänderChina;
                 AllergeneNutzer = AllergeneChina;
                 WeiterButtonText = "进一步";
-                UeberItemText = "大约";
                 BeendenBText = "结束";
                 break;
             case "ja":
                 LänderNutzer = LänderJapan;
                 AllergeneNutzer = AllergeneJapan;
                 WeiterButtonText = "さらに";
-                UeberItemText = "約";
                 BeendenBText = "終わり";
                 break;
             default:
                 LänderNutzer = LänderEngland;
                 AllergeneNutzer = AllergeneEngland;
                 WeiterButtonText = "Continue";
-                UeberItemText = "About";
                 BeendenBText = "Close";
                 break;
 

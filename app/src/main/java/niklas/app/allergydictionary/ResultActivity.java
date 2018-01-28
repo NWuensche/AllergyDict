@@ -24,10 +24,11 @@ public class ResultActivity extends AppCompatActivity {
         findForeignAllergies();
 
         Button b = findViewById(R.id.exitButton);
+        b.setText(DataStorage.BeendenBText);
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.exit(0);
+                System.exit(0); //TODO better
             }
         });
 
