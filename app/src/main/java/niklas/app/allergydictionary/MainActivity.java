@@ -14,8 +14,10 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -29,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     String UeberItemText = "";
     ArrayList<String> Items;
     Integer InhaltArray = 1;
-    LinearLayout Liste;
+    ListView Liste;
     String BeendenBText = "";
     boolean NichtsAusgewähltAllerge = true;
 
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     int AnzahlAllergene = 21;
     int[] woRot = new int[AnzahlAllergene];
     boolean ErstesmalAllergene = true;
+    ArrayAdapter<String> itemsAdapter;
 
 
     // TODO Datenbank
@@ -110,10 +113,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        Liste = (LinearLayout) findViewById(R.id.ListeID);
+        Liste = (ListView) findViewById(R.id.ListeID);
+        Items = new ArrayList<String>();
+
+        //Items.add("Test");
+        itemsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Items);
+        Liste.setAdapter(itemsAdapter);
         //Liste.setGravity(View.TEXT_ALIGNMENT_CENTER);
 
-        t.execute();
+        //t.execute();
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -143,6 +151,9 @@ public class MainActivity extends AppCompatActivity {
                     break;
 
         }
+
+        setArrayListLänder();
+        itemsAdapter.notifyDataSetChanged();
     }
 
 
@@ -159,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
         Items.clear();
         setwoRotNull();
 
-        Liste.removeAllViews();
+        //Liste.removeAllViews();
 
         switch(Locale.getDefault().getLanguage()){
             case "de":
@@ -342,6 +353,8 @@ public class MainActivity extends AppCompatActivity {
         for(String s : LänderNutzer){
             Items.add(s);
         }
+
+        itemsAdapter.notifyDataSetChanged();
 
     }
 
@@ -642,7 +655,7 @@ public class MainActivity extends AppCompatActivity {
                 TextV.setWidth(metrics.widthPixels);
                 TextV.setTypeface(Schrift);
                 TextV.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
-                Liste.addView(TextV);
+//                Liste.addView(TextV);
                 TextV.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
