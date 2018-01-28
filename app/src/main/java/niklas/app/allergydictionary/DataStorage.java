@@ -13,6 +13,7 @@ public class DataStorage {
     public static String WeiterButtonText;
     public static String UeberItemText;
     public static String BeendenBText;
+    public static int ForeignCountryID;
 
     public static String[] AllergeneDeutschland = { "Haselnuss", "Walnuss", "Erdnuss", "Paranuss", "Cashewnuss", "Macadamia", "Mandel", "Pistazie", "Gluten","Krebstiere","Ei","Fisch","Soja","Milchprodukte", "Schalenfrüchte","Sellerie","Senf","Sesam","Schwefel","Lupinen","Weichtiere"};
     public static String[] AllergeneEngland = {"hazelnut", "walnut", "peanut", "Brazil nut", "cashew", "macadamia", "almond", "pistachio", "gluten", "crustacean", "egg", "fish", "soy","Dairy","Nuts","Celery","Mustard","Sesame","Sulfur","Lupine","Mollusc"};

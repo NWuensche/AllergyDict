@@ -4,24 +4,17 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Typeface;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.DisplayMetrics;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Locale;
 
 
@@ -56,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         DataStorage.setUpItemsByLanguage();
 
         Liste = (ListView) findViewById(R.id.ListeID);
-        Items = new ArrayList<String>();
+        Items = new ArrayList<>(Arrays.asList(DataStorage.LänderNutzer));
 
         itemsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, Items);
         Liste.setAdapter(itemsAdapter);
@@ -64,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(MainActivity.this, AllergyListActivity.class);
-                intent.putExtra("Language", Items.get((int) l));
+                DataStorage.ForeignCountryID = (int) l;
                 startActivity(intent);
             }
         });
@@ -74,8 +67,6 @@ public class MainActivity extends AppCompatActivity {
 
         //t.execute();
 
-
-        setArrayListLänder();
         itemsAdapter.notifyDataSetChanged();
     }
 
@@ -109,33 +100,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-    private void setwoRotNull() {
-        // TODO Wenn Handy drehen, dann nicht neue Länder
-        for (int i = 0; i < woRot.length; i++) {
-            woRot[i] = 0;
-        }
-    }
-
-    private void setArrayListLänder() {
-        Items.clear();
-        //setwoRotNull();
-
-        //Liste.removeAllViews();
-
-
-        for (String s : DataStorage.LänderNutzer) {
-            Items.add(s);
-        }
-
-        itemsAdapter.notifyDataSetChanged();
-
-    }
-
     private void setArrayList() {
-        if (InhaltArray == 1) {
-            setArrayListLänder();
-        } else if (InhaltArray == 2) {
+        if (InhaltArray == 2) {
             setArrayListItems();
         } else if (InhaltArray == 3) {
             setArrayListAusland();
@@ -146,81 +112,7 @@ public class MainActivity extends AppCompatActivity {
         Items.clear();
         Liste.removeAllViews();
         int id = 0;
-        switch (SpracheID) {
-            case 0:
-                AllergeneAusland = DataStorage.AllergeneDeutschland;
-                break;
-            case 1:
-                AllergeneAusland = DataStorage.AllergeneEngland;
-                break;
-            case 2:
-                AllergeneAusland = DataStorage.AllergeneFrankreich;
-                break;
-            case 3:
-                AllergeneAusland = DataStorage.AllergeneSpanien;
-                break;
-            case 4:
-                AllergeneAusland = DataStorage.AllergenePortugal;
-                break;
-            case 5:
-                AllergeneAusland = DataStorage.AllergeneItalien;
-                break;
-            case 6:
-                AllergeneAusland = DataStorage.AllergeneDänemark;
-                break;
-            case 7:
-                AllergeneAusland = DataStorage.AllergeneSchweden;
-                break;
-            case 8:
-                AllergeneAusland = DataStorage.AllergeneNorwegen;
-                break;
-            case 9:
-                AllergeneAusland = DataStorage.AllergeneFinnland;
-                break;
-            case 10:
-                AllergeneAusland = DataStorage.AllergeneNiederlande;
-                break;
-            case 11:
-                AllergeneAusland = DataStorage.AllergeneTürkei;
-                break;
-            case 12:
-                AllergeneAusland = DataStorage.AllergeneKroatien;
-                break;
-            case 13:
-                AllergeneAusland = DataStorage.AllergeneGriechenland;
-                break;
-            case 14:
-                AllergeneAusland = DataStorage.AllergeneUngarn;
-                break;
-            case 15:
-                AllergeneAusland = DataStorage.AllergeneRussland;
-                break;
-            case 16:
-                AllergeneAusland = DataStorage.AllergeneTschechien;
-            case 17:
-                AllergeneAusland = DataStorage.AllergeneSlowakei;
-                break;
-            case 18:
-                AllergeneAusland = DataStorage.AllergeneSlowenien;
-                break;
-            case 19:
-                AllergeneAusland = DataStorage.AllergenePolen;
-                break;
-            case 20:
-                AllergeneAusland = DataStorage.AllergeneBulgarien;
-                break;
-            case 21:
-                AllergeneAusland = DataStorage.AllergeneArabien;
-                break;
-            case 22:
-                AllergeneAusland = DataStorage.AllergeneChina;
-                break;
-            case 23:
-                AllergeneAusland = DataStorage.AllergeneJapan;
-                break;
-            default:
-                AllergeneAusland = DataStorage.AllergeneEngland;
-        }
+
         String sPuffer = "";
         for (String s : AllergeneAusland) {  // TODO LänderAusland
             if (woRot[id] == 1) {
@@ -236,7 +128,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void setArrayListItems() {
         Items.clear();
-        setwoRotNull();
         Liste.removeAllViews();
         // TODO Untergruppen alphabetisch ordnen
         // TODO Mehrfachauswahl
@@ -458,6 +349,84 @@ public class MainActivity extends AppCompatActivity {
             }
 
             mProgressDialog.dismiss();
+
+
+
+              switch (SpracheID) {
+            case 0:
+                AllergeneAusland = DataStorage.AllergeneDeutschland;
+                break;
+            case 1:
+                AllergeneAusland = DataStorage.AllergeneEngland;
+                break;
+            case 2:
+                AllergeneAusland = DataStorage.AllergeneFrankreich;
+                break;
+            case 3:
+                AllergeneAusland = DataStorage.AllergeneSpanien;
+                break;
+            case 4:
+                AllergeneAusland = DataStorage.AllergenePortugal;
+                break;
+            case 5:
+                AllergeneAusland = DataStorage.AllergeneItalien;
+                break;
+            case 6:
+                AllergeneAusland = DataStorage.AllergeneDänemark;
+                break;
+            case 7:
+                AllergeneAusland = DataStorage.AllergeneSchweden;
+                break;
+            case 8:
+                AllergeneAusland = DataStorage.AllergeneNorwegen;
+                break;
+            case 9:
+                AllergeneAusland = DataStorage.AllergeneFinnland;
+                break;
+            case 10:
+                AllergeneAusland = DataStorage.AllergeneNiederlande;
+                break;
+            case 11:
+                AllergeneAusland = DataStorage.AllergeneTürkei;
+                break;
+            case 12:
+                AllergeneAusland = DataStorage.AllergeneKroatien;
+                break;
+            case 13:
+                AllergeneAusland = DataStorage.AllergeneGriechenland;
+                break;
+            case 14:
+                AllergeneAusland = DataStorage.AllergeneUngarn;
+                break;
+            case 15:
+                AllergeneAusland = DataStorage.AllergeneRussland;
+                break;
+            case 16:
+                AllergeneAusland = DataStorage.AllergeneTschechien;
+            case 17:
+                AllergeneAusland = DataStorage.AllergeneSlowakei;
+                break;
+            case 18:
+                AllergeneAusland = DataStorage.AllergeneSlowenien;
+                break;
+            case 19:
+                AllergeneAusland = DataStorage.AllergenePolen;
+                break;
+            case 20:
+                AllergeneAusland = DataStorage.AllergeneBulgarien;
+                break;
+            case 21:
+                AllergeneAusland = DataStorage.AllergeneArabien;
+                break;
+            case 22:
+                AllergeneAusland = DataStorage.AllergeneChina;
+                break;
+            case 23:
+                AllergeneAusland = DataStorage.AllergeneJapan;
+                break;
+            default:
+                AllergeneAusland = DataStorage.AllergeneEngland;
+        }
 
         }
     }
