@@ -18,16 +18,9 @@ public class ResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result_view);
 
-        findForeignAllergies();
+        this.setTitle(DataStorage.counriesUser[DataStorage.foreignCountryID]);
 
-        Button b = findViewById(R.id.exitButton);
-        b.setText(DataStorage.exitButtonText);
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                System.exit(0); //TODO better
-            }
-        });
+        findForeignAllergies();
 
         ArrayList<String> items = new ArrayList<>();
 

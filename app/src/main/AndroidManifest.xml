@@ -24,8 +24,7 @@
         </activity>
         <activity
             android:name=".ResultActivity"
-            android:label="@string/title_activity_result_view"
-            android:screenOrientation="portrait"></activity>
+            android:label="@string/title_activity_result_view"></activity>
     </application>
 
 </manifest>

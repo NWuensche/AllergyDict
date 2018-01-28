@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.menu.ActionMenuItem;
+import android.support.v7.view.menu.ActionMenuItemView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,9 +30,11 @@ public class AllergyListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_allergy_list);
 
+
+        this.setTitle(DataStorage.counriesUser[DataStorage.foreignCountryID]);
+
         ListView listView = findViewById(R.id.AllergyListView);
         ArrayList<String>  items = new ArrayList<>(Arrays.asList(DataStorage.allergenesUser));
-        //TODO Listen schöner machen
 
         ArrayAdapter<String> itemsAdapter = new AllergyItemAdapter(this, items);
         listView.setAdapter(itemsAdapter);
@@ -99,47 +104,6 @@ public class AllergyListActivity extends AppCompatActivity {
             }
         });
 
-        Button b = findViewById(R.id.button);
-        b.setText(DataStorage.nextButtonText);
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(atleastOneMarkedAllery()) {
-                    Intent intent = new Intent(AllergyListActivity.this, ResultActivity.class);
-                    startActivity(intent);
-                }
-                else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(AllergyListActivity.this);
-
-                    switch (Locale.getDefault().getLanguage()) {
-                        case "de":
-                            builder.setTitle("Fehler")
-                                    .setMessage("Wählen sie mindestens ein Allergen aus.")
-                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-
-                                        }
-                                    })
-                                    .create().show();
-                            break;
-                        default:
-                            builder.setTitle("Error")
-                                    .setMessage("Select atleast one allergen")
-                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-
-                                        }
-                                    })
-                                    .create().show();
-                            break;
-                    }
-                }
-
-            }
-        });
-
     }
 
     public boolean atleastOneMarkedAllery() {
@@ -149,6 +113,54 @@ public class AllergyListActivity extends AppCompatActivity {
             }
         }
         return false;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_finished) {
+            if(atleastOneMarkedAllery()) {
+                Intent intent = new Intent(AllergyListActivity.this, ResultActivity.class);
+                startActivity(intent);
+            }
+            else {
+                AlertDialog.Builder builder = new AlertDialog.Builder(AllergyListActivity.this);
+
+                switch (Locale.getDefault().getLanguage()) {
+                    case "de":
+                        builder.setTitle("Fehler")
+                                .setMessage("Wählen sie mindestens ein Allergen aus.")
+                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                    }
+                                })
+                                .create().show();
+                        break;
+                    default:
+                        builder.setTitle("Error")
+                                .setMessage("Select atleast one allergen")
+                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                    }
+                                })
+                                .create().show();
+                        break;
+                }
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater=getMenuInflater();
+        inflater.inflate(R.menu.allergy_list_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+
     }
 
 }

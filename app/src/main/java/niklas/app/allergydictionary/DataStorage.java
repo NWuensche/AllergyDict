@@ -9,7 +9,7 @@ import java.util.Locale;
 public class DataStorage {
     
     public static String[] allergenesUser;
-    public static String[] CountryUser;
+    public static String[] counriesUser;
     public static String nextButtonText;
     public static String exitButtonText;
     public static int foreignCountryID;
@@ -77,151 +77,151 @@ public class DataStorage {
     public static void setUpItemsByLanguage() {
         switch (Locale.getDefault().getLanguage()) {
             case "de":
-                CountryUser = LänderDeutschland;
+                counriesUser = LänderDeutschland;
                 allergenesUser = AllergeneDeutschland;
                 nextButtonText = "Weiter";
                 exitButtonText = "Beenden";
                 break;
             case "en":
-                CountryUser = LänderEngland;
+                counriesUser = LänderEngland;
                 allergenesUser = AllergeneEngland;
                 nextButtonText = "Continue";
                 exitButtonText = "Close";
                 break;
             case "cs":
-                CountryUser = LänderTschechien;
+                counriesUser = LänderTschechien;
                 allergenesUser = AllergeneTschechien;
                 nextButtonText = "další";
                 exitButtonText = "zavřít";
                 break;
             case "fr":
-                CountryUser = LänderFrankreich;
+                counriesUser = LänderFrankreich;
                 allergenesUser = AllergeneFrankreich;
                 nextButtonText = "plus loin";
                 exitButtonText = "fermer";
                 break;
             case "es":
-                CountryUser = LänderSpanien;
+                counriesUser = LänderSpanien;
                 allergenesUser = AllergeneSpanien;
                 nextButtonText = "adicional";
                 exitButtonText = "cerrar";
                 break;
             case "pt":
-                CountryUser = LänderPortugal;
+                counriesUser = LänderPortugal;
                 allergenesUser = AllergenePortugal;
                 nextButtonText = "mais";
                 exitButtonText = "desligar";
                 break;
             case "it":
-                CountryUser = LänderItalien;
+                counriesUser = LänderItalien;
                 allergenesUser = AllergeneItalien;
                 nextButtonText = "ulteriore";
                 exitButtonText = "fermare";
                 break;
             case "da":
-                CountryUser = LänderDänemark;
+                counriesUser = LänderDänemark;
                 allergenesUser = AllergeneDänemark;
                 nextButtonText = "yderligere";
                 exitButtonText = "lukke ned";
                 break;
             case "sv":
-                CountryUser = LänderSchweden;
+                counriesUser = LänderSchweden;
                 allergenesUser = AllergeneSchweden;
                 nextButtonText = "ytterligare";
                 exitButtonText = "stänga av";
                 break;
             case "no":
-                CountryUser = LänderNorwegen;
+                counriesUser = LänderNorwegen;
                 allergenesUser = AllergeneNorwegen;
                 nextButtonText = "videre";
                 exitButtonText = "skru av";
                 break;
             case "fi":
-                CountryUser = LänderFinnland;
+                counriesUser = LänderFinnland;
                 allergenesUser = AllergeneFinnland;
                 nextButtonText = "edelleen";
                 exitButtonText = "sulkea";
                 break;
             case "nl":
-                CountryUser = LänderNiederlande;
+                counriesUser = LänderNiederlande;
                 allergenesUser = AllergeneNiederlande;
                 nextButtonText = "verder";
                 exitButtonText = "afsluiten";
                 break;
             case "tr":
-                CountryUser = LänderTürkei;
+                counriesUser = LänderTürkei;
                 allergenesUser = AllergeneTürkei;
                 nextButtonText = "ayrıca";
                 exitButtonText = "kapat";
                 break;
             case "hr":
-                CountryUser = LänderKroatien;
+                counriesUser = LänderKroatien;
                 allergenesUser = AllergeneKroatien;
                 nextButtonText = "dalje";
                 exitButtonText = "ugasiti";
                 break;
             case "el":
-                CountryUser = LänderGriechenland;
+                counriesUser = LänderGriechenland;
                 allergenesUser = AllergeneGriechenland;
                 nextButtonText = "περαιτέρω";
                 exitButtonText = "τέλος";
                 break;
             case "hu":
-                CountryUser = LänderUngarn;
+                counriesUser = LänderUngarn;
                 allergenesUser = AllergeneUngarn;
                 nextButtonText = "további";
                 exitButtonText = "vég";
                 break;
             case "ru":
-                CountryUser = LänderRussland;
+                counriesUser = LänderRussland;
                 allergenesUser = AllergeneRussland;
                 nextButtonText = "дальше";
                 exitButtonText = "конец";
                 break;
             case "sk":
-                CountryUser = LänderSlowakei;
+                counriesUser = LänderSlowakei;
                 allergenesUser = AllergeneSlowakei;
                 nextButtonText = "ďalšie";
                 exitButtonText = "koniec";
                 break;
             case "sl":
-                CountryUser = LänderSlowenien;
+                counriesUser = LänderSlowenien;
                 allergenesUser = AllergeneSlowenien;
                 nextButtonText = "nadalje";
                 exitButtonText = "konec";
                 break;
             case "pl":
-                CountryUser = LänderPolen;
+                counriesUser = LänderPolen;
                 allergenesUser = AllergenePolen;
                 nextButtonText = "dalej";
                 exitButtonText = "koniec";
                 break;
             case "bg":
-                CountryUser = LänderBulgarien;
+                counriesUser = LänderBulgarien;
                 allergenesUser = AllergeneBulgarien;
                 nextButtonText = "още";
                 exitButtonText = "край";
                 break;
             case "ar":
-                CountryUser = LänderArabien;
+                counriesUser = LänderArabien;
                 allergenesUser = AllergeneArabien;
                 nextButtonText = "إضافي";
                 exitButtonText = "النهاية";
                 break;
             case "zh":
-                CountryUser = LänderChina;
+                counriesUser = LänderChina;
                 allergenesUser = AllergeneChina;
                 nextButtonText = "进一步";
                 exitButtonText = "结束";
                 break;
             case "ja":
-                CountryUser = LänderJapan;
+                counriesUser = LänderJapan;
                 allergenesUser = AllergeneJapan;
                 nextButtonText = "さらに";
                 exitButtonText = "終わり";
                 break;
             default:
-                CountryUser = LänderEngland;
+                counriesUser = LänderEngland;
                 allergenesUser = AllergeneEngland;
                 nextButtonText = "Continue";
                 exitButtonText = "Close";
