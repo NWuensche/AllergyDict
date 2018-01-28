@@ -6,9 +6,14 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
+import android.view.animation.ScaleAnimation;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -24,20 +29,72 @@ public class AllergyListActivity extends AppCompatActivity {
 
         ListView listView = findViewById(R.id.AllergyListView);
         ArrayList<String>  items = new ArrayList<>(Arrays.asList(DataStorage.allergenesUser));
-        //TODO Add Toolbar
+        //TODO Haken annimieren
+        //TODO Richtigen Haken als Bild nutzen
+        //TODO Listen schöner machen
 
-
-        ArrayAdapter<String> itemsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items);
+        ArrayAdapter<String> itemsAdapter = new AllergyItemAdapter(this, items);
         listView.setAdapter(itemsAdapter);
+
+
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //Show Haken Picture
                 if (DataStorage.isMarked[(int) l]) {
-                    //TODO Don't show Haken
+                    final ImageView image = view.findViewById(R.id.allergyImageItem);
+
+                    Animation a = new ScaleAnimation(1.0f,0.0f,1.0f,0.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+
+                    a.setDuration(500);
+                    a.setAnimationListener(new Animation.AnimationListener() {
+
+                        public void onAnimationStart(Animation animation) {
+                            // TODO Auto-generated method stub
+
+                        }
+
+                        public void onAnimationRepeat(Animation animation) {
+                            // TODO Auto-generated method stub
+
+                        }
+
+                        public void onAnimationEnd(Animation animation) {
+                            image.setVisibility(View.INVISIBLE);
+
+                        }
+                    });
+
+                   /* image.setVisibility(View.VISIBLE);
+                    image.setAnimation(new AlphaAnimation(100, 0));
+                    image.animate().alphaBy(-100).start();*/
+                    image.startAnimation(a);
+
                     DataStorage.isMarked[(int) l] = false;
                 } else {
-                    //TODO Show Picture
+                    final ImageView image = view.findViewById(R.id.allergyImageItem);
+
+                    Animation a = new ScaleAnimation(0.0f,1.0f,0.0f,1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+
+                    a.setDuration(500);
+                    a.setAnimationListener(new Animation.AnimationListener() {
+
+                        public void onAnimationStart(Animation animation) {
+                            // TODO Auto-generated method stub
+
+                        }
+
+                        public void onAnimationRepeat(Animation animation) {
+                            // TODO Auto-generated method stub
+
+                        }
+
+                        public void onAnimationEnd(Animation animation) {
+                            image.setVisibility(View.VISIBLE);
+
+                        }
+                    });
+                    image.startAnimation(a);
                     DataStorage.isMarked[(int) l] = true;
 
                 }

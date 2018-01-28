@@ -33,7 +33,7 @@ public class ResultActivity extends AppCompatActivity {
 
         for(int i = 0; i < AllergeneAusland.length; i++) {
                 if(DataStorage.isMarked[i]) {
-                    items.add(AllergeneAusland[i] + "(" + DataStorage.allergenesUser[i] + ")");
+                    items.add(AllergeneAusland[i] + " (" + DataStorage.allergenesUser[i] + ")");
                 }
         }
         ArrayAdapter<String> itemsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items);

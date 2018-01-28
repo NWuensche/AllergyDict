@@ -9,7 +9,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,16 +20,12 @@
         <activity
             android:name=".AllergyListActivity"
             android:label="@string/title_activity_allergy_list"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="niklas.app.allergydictionary.MainActivity" />
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".ResultActivity"
             android:label="@string/title_activity_result_view"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:screenOrientation="portrait"></activity>
     </application>
 
-</manifest> <!-- android:screenOrientation="portrait" -->
+</manifest>
