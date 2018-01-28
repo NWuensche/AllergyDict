@@ -4,4 +4,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="Weiter_Allergene">Weiter</string>
+    <string name="title_activity_allergy_list">AllergyListActivity</string>
+    <string name="title_activity_result_view">ResultView</string>
 </resources>
