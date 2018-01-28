@@ -63,9 +63,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         showSecurityDialog();
-        //Liste.setGravity(View.TEXT_ALIGNMENT_CENTER);
-
-        //t.execute();
 
         itemsAdapter.notifyDataSetChanged();
     }
@@ -100,44 +97,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void setArrayList() {
-        if (InhaltArray == 2) {
-            setArrayListItems();
-        } else if (InhaltArray == 3) {
-            setArrayListAusland();
-        }
-    }
-
-    private void setArrayListAusland() {
-        Items.clear();
-        Liste.removeAllViews();
-        int id = 0;
-
-        String sPuffer = "";
-        for (String s : AllergeneAusland) {  // TODO LänderAusland
-            if (woRot[id] == 1) {
-
-                Items.add(s + "  (" + DataStorage.AllergeneNutzer[id] + ")");// TODO eigenene Ländernamen rein
-                //TODO Farben Pastell
-
-            }
-            id++;
-        }
-    }
-
-
-    private void setArrayListItems() {
-        Items.clear();
-        Liste.removeAllViews();
-        // TODO Untergruppen alphabetisch ordnen
-        // TODO Mehrfachauswahl
-        // TODO Sprache --> Anderes Zeug in Array
-
-        for (String s : DataStorage.AllergeneNutzer) {
-            Items.add(s);
-        }
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -168,53 +127,9 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 
- /*   class Thre extends AsyncTask<Void, Void, Void>{
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            mProgressDialog = new ProgressDialog(MainActivity.this);
-            mProgressDialog.setTitle("Allergy");
-            mProgressDialog.setMessage("Laden...");
-            mProgressDialog.setIndeterminate(false);
-            mProgressDialog.show();
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            Items = new ArrayList<String>();
-            setArrayList();
-
-              // TODO machen      Ueber.setTitle(UeberItemText);
-
-            Typeface Schrift = Typeface.createFromAsset(getAssets(),"SourceSansPro-Regular.ttf");
-
-            if(!ErstesmalAllergene & InhaltArray != 3) {
+ /*
                 Button WeiterB = new Button(getApplicationContext());
                 WeiterB.setText(WeiterButtonText);
-
-
-                WeiterB.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
-                WeiterB.setTypeface(Schrift);
-                WeiterB.setTextSize(30);
-                WeiterB.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // TODO neues Fenster mit Übersetzung + Deutsch
-                        for(int i = 0 ; i<woRot.length;i++){
-                            if(woRot[i] == 1){
-                                NichtsAusgewähltAllerge = false;
-                                InhaltArray = 3;
-                                Thre t2 = new Thre();
-                                t2.execute();
-                                break;
-                            }
-                        }
 
                         if(NichtsAusgewähltAllerge) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -249,58 +164,19 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
-                Liste.addView(WeiterB);
-
-                Button LandB = new Button(getApplicationContext());
-                LandB.setText(LänderAuslandName);
-                LandB.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
-                LandB.setTypeface(Schrift);
-                LandB.setTextSize(30);
-
             }
             if(InhaltArray == 3){
                 Button BeendenB = new Button(getApplicationContext());
                 BeendenB.setText(BeendenBText); // TODO In Sprache
-
-
-                BeendenB.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
-                BeendenB.setTypeface(Schrift);
-                BeendenB.setTextSize(30);
-                BeendenB.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // TODO neues Fenster mit Übersetzung + Deutsch
-                        System.exit(0);
-                    }
-                });
-                Liste.addView(BeendenB);
             }
             Button UeberB = new Button(getApplicationContext());
-            UeberB.setText(UeberItemText);
             //TODO wenn kein Allergen ausgewählt
 
 
             UeberB.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
             UeberB.setTypeface(Schrift);
             UeberB.setTextSize(30);
-            UeberB.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                    LayoutInflater inflater = MainActivity.this.getLayoutInflater();
 
-                    builder.setTitle(UeberItemText)
-                            .setMessage("Font by  Adobe: http://www.fontsquirrel.com/fonts/source-sans-pro \n Logo by")
-                            .setPositiveButton("Back", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                }
-                            })
-                            .create().show();
-
-                }
-            });
 
             int id = 0;
 
@@ -349,84 +225,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
             mProgressDialog.dismiss();
-
-
-
-              switch (SpracheID) {
-            case 0:
-                AllergeneAusland = DataStorage.AllergeneDeutschland;
-                break;
-            case 1:
-                AllergeneAusland = DataStorage.AllergeneEngland;
-                break;
-            case 2:
-                AllergeneAusland = DataStorage.AllergeneFrankreich;
-                break;
-            case 3:
-                AllergeneAusland = DataStorage.AllergeneSpanien;
-                break;
-            case 4:
-                AllergeneAusland = DataStorage.AllergenePortugal;
-                break;
-            case 5:
-                AllergeneAusland = DataStorage.AllergeneItalien;
-                break;
-            case 6:
-                AllergeneAusland = DataStorage.AllergeneDänemark;
-                break;
-            case 7:
-                AllergeneAusland = DataStorage.AllergeneSchweden;
-                break;
-            case 8:
-                AllergeneAusland = DataStorage.AllergeneNorwegen;
-                break;
-            case 9:
-                AllergeneAusland = DataStorage.AllergeneFinnland;
-                break;
-            case 10:
-                AllergeneAusland = DataStorage.AllergeneNiederlande;
-                break;
-            case 11:
-                AllergeneAusland = DataStorage.AllergeneTürkei;
-                break;
-            case 12:
-                AllergeneAusland = DataStorage.AllergeneKroatien;
-                break;
-            case 13:
-                AllergeneAusland = DataStorage.AllergeneGriechenland;
-                break;
-            case 14:
-                AllergeneAusland = DataStorage.AllergeneUngarn;
-                break;
-            case 15:
-                AllergeneAusland = DataStorage.AllergeneRussland;
-                break;
-            case 16:
-                AllergeneAusland = DataStorage.AllergeneTschechien;
-            case 17:
-                AllergeneAusland = DataStorage.AllergeneSlowakei;
-                break;
-            case 18:
-                AllergeneAusland = DataStorage.AllergeneSlowenien;
-                break;
-            case 19:
-                AllergeneAusland = DataStorage.AllergenePolen;
-                break;
-            case 20:
-                AllergeneAusland = DataStorage.AllergeneBulgarien;
-                break;
-            case 21:
-                AllergeneAusland = DataStorage.AllergeneArabien;
-                break;
-            case 22:
-                AllergeneAusland = DataStorage.AllergeneChina;
-                break;
-            case 23:
-                AllergeneAusland = DataStorage.AllergeneJapan;
-                break;
-            default:
-                AllergeneAusland = DataStorage.AllergeneEngland;
-        }
 
         }
     }

@@ -25,6 +25,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="niklas.app.allergydictionary.MainActivity" />
         </activity>
+        <activity
+            android:name=".ResultActivity"
+            android:label="@string/title_activity_result_view"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest> <!-- android:screenOrientation="portrait" -->
