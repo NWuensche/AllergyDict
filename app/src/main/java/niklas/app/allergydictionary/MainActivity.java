@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
         Liste = (LinearLayout) findViewById(R.id.ListeID);
-        Liste.setGravity(View.TEXT_ALIGNMENT_CENTER);
+        //Liste.setGravity(View.TEXT_ALIGNMENT_CENTER);
 
         t.execute();
 
@@ -525,7 +525,6 @@ public class MainActivity extends AppCompatActivity {
                 WeiterB.setText(WeiterButtonText);
 
 
-                WeiterB.setBackgroundResource(R.drawable.roundcornersbutton);
                 WeiterB.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
                 WeiterB.setTypeface(Schrift);
                 WeiterB.setTextSize(30);
@@ -580,7 +579,6 @@ public class MainActivity extends AppCompatActivity {
 
                 Button LandB = new Button(getApplicationContext());
                 LandB.setText(LänderAuslandName);
-                LandB.setBackgroundResource(R.drawable.roundcornersbutton);
                 LandB.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
                 LandB.setTypeface(Schrift);
                 LandB.setTextSize(30);
@@ -591,7 +589,6 @@ public class MainActivity extends AppCompatActivity {
                 BeendenB.setText(BeendenBText); // TODO In Sprache
 
 
-                BeendenB.setBackgroundResource(R.drawable.roundcornersbutton);
                 BeendenB.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
                 BeendenB.setTypeface(Schrift);
                 BeendenB.setTextSize(30);
@@ -609,7 +606,6 @@ public class MainActivity extends AppCompatActivity {
             //TODO wenn kein Allergen ausgewählt
 
 
-            UeberB.setBackgroundResource(R.drawable.roundcornersbutton);
             UeberB.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
             UeberB.setTypeface(Schrift);
             UeberB.setTextSize(30);
@@ -637,7 +633,7 @@ public class MainActivity extends AppCompatActivity {
             for(String s : Items){
                 final TextView TextV = new TextView(getApplicationContext());
                 TextV.setText(s);
-                TextV.setTextColor(Color.WHITE);
+                TextV.setTextColor(Color.BLACK);
                 TextV.setTextSize(30);
                 final int id2 = id;
 
@@ -645,7 +641,6 @@ public class MainActivity extends AppCompatActivity {
                 getWindowManager().getDefaultDisplay().getMetrics(metrics);
                 TextV.setWidth(metrics.widthPixels);
                 TextV.setTypeface(Schrift);
-                TextV.setBackgroundResource(R.drawable.roundcorners);
                 TextV.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
                 Liste.addView(TextV);
                 TextV.setOnClickListener(new View.OnClickListener() {
@@ -655,7 +650,7 @@ public class MainActivity extends AppCompatActivity {
 
                         if (InhaltArray == 2) {
                             if (TextV.getCurrentTextColor() == Color.RED) {
-                                TextV.setTextColor(Color.WHITE);
+                                TextV.setTextColor(Color.BLACK);
                                 woRot[id2] = 0;
                             } else {
                                 TextV.setTextColor(Color.RED);
