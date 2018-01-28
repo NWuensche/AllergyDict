@@ -29,8 +29,6 @@ public class AllergyListActivity extends AppCompatActivity {
 
         ListView listView = findViewById(R.id.AllergyListView);
         ArrayList<String>  items = new ArrayList<>(Arrays.asList(DataStorage.allergenesUser));
-        //TODO Haken annimieren
-        //TODO Richtigen Haken als Bild nutzen
         //TODO Listen schöner machen
 
         ArrayAdapter<String> itemsAdapter = new AllergyItemAdapter(this, items);
