@@ -3,6 +3,7 @@ package niklas.app.allergydictionary;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -14,9 +15,9 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -27,17 +28,14 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
 
     Integer SpracheID = -1;
-    String WeiterButtonText = "";
-    String UeberItemText = "";
     ArrayList<String> Items;
     Integer InhaltArray = 1;
     ListView Liste;
-    String BeendenBText = "";
     boolean NichtsAusgewähltAllerge = true;
 
     ProgressDialog mProgressDialog;
 
-    Thre t = new Thre();
+   // Thre t = new Thre();
     String LänderAuslandName;
     int AnzahlAllergene = 21;
     int[] woRot = new int[AnzahlAllergene];
@@ -46,311 +44,87 @@ public class MainActivity extends AppCompatActivity {
 
 
     // TODO Datenbank
-    String[] AllergeneNutzer;
     String[] AllergeneAusland;
-    String[] LänderNutzer;
 
-    String[] AllergeneDeutschland = { "Haselnuss", "Walnuss", "Erdnuss", "Paranuss", "Cashewnuss", "Macadamia", "Mandel", "Pistazie", "Gluten","Krebstiere","Ei","Fisch","Soja","Milchprodukte", "Schalenfrüchte","Sellerie","Senf","Sesam","Schwefel","Lupinen","Weichtiere"};
-    String[] AllergeneEngland = {"hazelnut", "walnut", "peanut", "Brazil nut", "cashew", "macadamia", "almond", "pistachio", "gluten", "crustacean", "egg", "fish", "soy","Dairy","Nuts","Celery","Mustard","Sesame","Sulfur","Lupine","Mollusc"};
-    String[] AllergeneFrankreich = {"Noisette", "noix", "arachides", "noix du Brésil", "noix de cajou", "macadamia", "amande", "pistache", "sans gluten", "crustacés", "oeuf", "poisson", "soja","les produits laitiers","Noix","Céleri","Moutarde" ,"sésame","soufre","lupin","mollusque"};
-    String[] AllergeneSpanien = {"avellana", "nueces", "maní", "nuez de Brasil", "cajú", "macadamia", "almendra", "pistachos", "gluten", "crustáceos", "huevo", "pescado", "soja","Productos lácteos","Nueces","Apio","Mostaza","Sésamo","Azufre","Chocho","Moluscos"};
-    String[] AllergenePortugal = {"avelã", "noz", "amendoim", "castanha do Brasil", "caju", "macadâmia", "amendoeiras", "pistachio", "glúten", "crustáceo", "ovo", "pescar", "soy","Produtos lácteos","Castanhas","Aipo","Mostarda","Gergelim","Enxofre","Tremoço","Molusco"};
-    String[] AllergeneItalien = {"nocciola", "noce", "peanut", "noci del Brasile", "cashew", "macadamia", "a mandorla", "pistacchio", "glutine", "crostaceo", "uovo", "pesce", "soy","Latte","Noci","Sedano","Senape","Sesamo","Di zolfo","Lupin","Mollusco"};
-    String[] AllergeneDänemark = {"hasselnød", "valnød", "peanut", "Brazil nut", "cashew", "macadamia", "mandel", "pistacie", "gluten", "krebsdyr", "æg", "fisk", "soja","Mejeri","Nuts","Selleri","Sennep","Sesam","Svovl","Lupin","Bløddyr"};
-    String[] AllergeneSchweden = {"hasselnöt", "valnöt", "jordnöt", "Brasilien nöt", "cashew", "makadamianötter", "almond", "pistage", "gluten", "kräftdjur", "ägget", "fisk", "soja","Mejeri","Nötter","Selleri","Senap","Sesam","Svavel","Lupin","Blötdjur"};
-    String[] AllergeneNorwegen = {"Hasselnøtter", "valnøtt", "peanut", "Brazil nut", "cashew", "macadamia", "mandel", "pistasj", "gluten", "krepsdyr", "egg", "fisk", "soya","Meieri","Nøtter","Selleri","Sennep","Sesam","Svovel","Lupin","Bløtdyr"};
-    String[] AllergeneFinnland = {"hasselpähkinä", "saksanpähkinä", "maapähkinä", "Brazil nut", "cashew", "macadamia", "manteli", "pistaasi", "gluteeniton", "äyriäinen", "muna", "fish", "soy","Meijeri","Pähkinät","Selleri","Sinappia","Seesami","Rikki","Lupiini","Nilviäinen"};
-    String[] AllergeneNiederlande = {"hazelnoot", "walnoot", "peanut", "Brazil nut", "cashew", "macadamia", "almond", "pistache", "gluten", "schaaldieren", "ei", "fish", "soy","Zuivel","Nuts","Selderij","Mustard","Sesame","Zwavel","Lupine","Mollusc"};
-    String[] AllergeneTürkei = {"fındık", "ceviz", "fıstık", "Brezilya fıstığı", "kaju", "macadamia", "badem", "fıstık", "gluten", "kabuklu", "yumurta", "balık", "soy","Süt","Fındık","Kereviz","Hardal","Susam","Kükürt","Kurt","Yumuşakça"};
-    String[] AllergeneKroatien = {"lješnjak", "oraha", "kikiriki", "Brazil orah", "kasu", "australski", "badem", "pistacija", "glutena", "rak", "Jaje", "riba", "od soje","Mliječni","Matice","Celer","Senf","Sezam","Sumpor","Lupina","Mekušaca"};
-    String[] AllergeneGriechenland = {
-            "φουντούκι", "καρύδι", "φυστίκι", "καρύδι Βραζιλίας", "κάσιους", "macadamia", "αμύγδαλο", "φιστίκι", "χωρίς γλουτένη", "καρκινοειδών", "αυγό", "ψάρι", "σόγια "," γαλακτοκομικά "," καρύδια "," σέλινο "," μουστάρδα "," σουσάμι "," θείο "," λούπινα "," μαλάκιο "};
-    String[] AllergeneUngarn = {"mogyoró", "dió", "földimogyoró", "brazil dió", "kesudió", "macadamia", "mandula", "pisztácia", "glutén", "rákok", "tojás", "hal", "szója","Tejtermékek","Dió ","Zeller","Mustár","Szezám","Kén","Csillagfürt","Puhatestű "};
-    String[] AllergeneRussland = {
-                    "фундук", "грецкий орех", "арахисовое", "Бразильский орех", "кешью", "макадамии", "Миндаль", "фисташки", "клейковины", "рачок", "яйцо", "рыба", "соевый "," молочные продукты "," гайки "," сельдерей "," горчица "," кунжутное "," сера "," люпина "," моллюск "};
-    String[] AllergeneTschechien = {"lískový ořech", "vlašský ořech", "arašíd", "Brazil ořech", "kešu", "macadamia", "mandle", "pistácie", "lepek", "korýš", "vejce", "ryba", "soy"," mléčné výrobky"," ořechy", "celer","hořčice","sezam","síra","vlčí bob","měkkýši"};
-    String[] AllergeneSlowakei = {"lieskový orech", "vlašský orech", "arašidy", "Brazil orech", "kešu", "macadamia", "mandle", "pistácie", "lepok", "kôrovec", "vajcia", "ryba", "soy","Mliečne výrobky","Orechy","Zeler","Horčica","Sezam","Síra","Vlčí ","Mäkkýše"};
-    String[] AllergeneSlowenien = {"lešnik", "oreh", "arašide", "Brazilija oreh", "indijski", "makadamija", "mandelj", "pistacija", "gluten", "raki", "jajce", "ribe", "soja","Mlečni","Orehi","Zelena","Gorčica","Sezamovo"," žvepla","Volčji bob","Mehkužcev"};
-    String[] AllergenePolen = {
-                    "orzech laskowy", "orzech włoski", "orzeszki ziemne", "orzech Brazil", "nerkowca", "macadamia", "migdał", "pistacjowy", "gluten", "skorupiak", "jajko", "ryba", "sojowego","Mleczarnia","Orzechy","Seler","Musztarda","Sezam","Siarka","Wilczy","Mięczaków"};
-    String[] AllergeneBulgarien = {"лешник", "орех", "фъстъчен", "Бразилия гайка", "кашу", "макадамия", "бадем", "шам-фъстък", "без глутен", "ракообразно", "яйце", "риба", "соев "," млечни продукти "," ядки "," целина "," горчица "," сусам "," серен "," вълчи "," мекотели "};
-    String[] AllergeneArabien = {"بندق", "خشب الجوز", "الفول السوداني", "البرازيل الجوز", "الكاجو", "المكاديميا", "اللوز", "الفستق", "الغلوتين", "القشريات", "البيضة", "الأسماك", "الصويا "," منتجات الألبان "," المكسرات "," الكرفس "," الخردل "," السمسم "," الكبريت "," الترمس "," الرخويات "};
-    String[] AllergeneChina = {"榛子","核桃","花生","巴西果","腰果","夏威夷","杏仁","开心果","面筋","甲壳","蛋","鱼","酱油","乳制品","坚果","芹菜","榨菜","芝麻","硫磺","鲁冰花","软体动物"};
-    String[] AllergeneJapan = {"ヘーゼルナッツ","ウォールナット","ピーナッツ","ブラジルナッツ","カシュー","マカダミア","アーモンド","ピスタチオ","グルテン","甲殻類","たまご","魚","大豆","乳製品","ナッツ","セロリ","マスタード","ゴマ","硫黄","ルピナス","軟体動物"};
-
-    String[] LänderDeutschland = { "Deutschland","England","Frankreich","Spanien","Portugal", "Italien","Dänemark","Schweden", "Norwegen", "Finnland", "Niederlande","Türkei", "Kroatien","Griechenland","Ungarn", "Russland", "Tschechien", "Slowakei", "Slowenien", "Polen",  "Bulgarien","Arabien", "China", "Japan"};
-    String[] LänderEngland ={"Germany", "England", "France", "Spain", "Portugal", "Italy", "Denmark", "Sweden", "Norway", "Finland", "Netherlands", "Turkey", "Croatia","Greece","Hungary","Russia","Czech Republic","Slovakia","Slovenia","Poland","Bulgaria","Arabia","China","Japan"};
-    String[] LänderFrankreich ={"Allemagne", "l'Angleterre", "France", "Espagne", "Portugal", "Italie", "le Danemark", "La Suède", "la Norvège", "la Finlande", "Pays-Bas", "la Turquie", "Croatie","Grèce","Hongrie","Russie","République tchèque","Slovaquie","Slovénie","La Pologne","La Bulgarie","Arabia","Chine","Japon"};
-    String[] LänderSpanien ={
-            "Alemania", "Inglaterra", "Francia", "España", "Portugal", "Italia", "Dinamarca", "Suecia", "Noruega", "Finlandia", "Países Bajos", "Turquía", "Croacia","Grecia","Hungría","Rusia","República Checa","Eslovaquia","Eslovenia","Polonia","Bulgaria","Arabia","China","Japón"};
-    String[] LänderPortugal ={"Alemanha", "Inglaterra", "França", "Spain", "Portugal", "Itália", "Dinamarca", "Suécia", "Noruega", "Finlândia", "Países Baixos", "turquia", "Croatia","Grécia","Hungria","Rússia","República Checa","Eslováquia","Slovenia","Polónia","Bulgária","Arábia","China","Japão"};
-    String[] LänderItalien ={"Germania", "England", "Francia", "Spain", "Portugal", "Italia", "la Danimarca", "Svezia", "Norvegia", "Finlandia", "Paesi Bassi", "Turchia", "Croazia","Grecia","L'Ungheria","Russia","Repubblica Ceca","Slovacchia","Slovenia","La Polonia","Bulgaria","Arabia","Cina","Japan"};
-    String[] LänderDänemark ={"Tyskland", "England", "France", "Spanien", "Portugal", "Italien", "Danmark", "Sverige", "Norge", "Finland", "Holland", "Tyrkiet", "Kroatien","Grækenland","Ungarn","Rusland","Tjekkiet","Slovakiet","Slovenien","Polen","Bulgarien","Arabia","China","Japan"};
-    String[] LänderSchweden ={
-            "Tyskland", "England", "Frankrike", "Spanien", "Portugal", "Italien", "Danmark", "Sverige", "Norge", "Finland", "Nederländerna", "Turkiet", "Kroatien","Grekland","Ungern","Ryssland","Tjeckien","Slovakien","Slovenien","Polen","Bulgarien","Arabien","Kina","Japan"};
-    String[] LänderNorwegen ={
-            "Germany", "England", "Frankrike", "Spain", "Portugal", "Italia", "Danmark", "Sverige", "Norge", "Finland", "Nederland", "Turkey", "Kroatia","Hellas","Ungarn","Russland","Tsjekkia","Slovakia","Slovenia","Polen","Bulgaria","Arabia","China","Japan"};
-    String[] LänderFinnland ={"Saksa", "England", "France", "Espanja", "Portugali", "Italia", "Denmark", "Ruotsi", "Norja", "Suomi", "Alankomaat", "Turkki", "Croatia","Kreikka","Unkari","Venäjä ","Tšekki","Slovakia","Slovenia","Puola","Bulgaria","Arabian","Kiina","Japan"};
-    String[] LänderNiederlande ={
-            "Duitsland", "Engeland", "Frankrijk", "Spanje", "Portugal", "Italië", "Denemarken", "Zweden", "Noorwegen", "Finland", "Nederland", "Turkije", "Kroatië ","Griekenland","Hongarije","Rusland","Tsjechië ","Slowakije","Slovenië ","Polen","Bulgarije","Arabia","China","Japan"};
-    String[] LänderTürkei ={"Almanya", "İngiltere", "Fransa", "Spain", "Portekiz", "İtalya", "Danimarka", "İsveç", "Norveç", "Finlandiya", "Hollanda", "Türkiye", "Hırvatistan","Yunanistan","Macaristan","Rusya"," Çek Cumhuriyeti","Slovakya","Slovenya","Polonya","Bulgaristan","Arabistan"," Çin","Japonya"};
-    String[] LänderKroatien ={"Njemačka", "Engleska", "Francuska", "Španjolska", "Portugal", "Italija", "Danska", "Švedska", "Norveška", "Finska", "Nizozemska", "Turska", "Hrvatska","Grčka","Mađarska","Rusija"," Češka Republika","Slovačka","Slovenija","Poljska","Bugarska","Arabije","Kina","Japan"};
-    String[] LänderGriechenland ={"Γερμανία", "Αγγλία", "Γαλλία", "Ισπανία", "Πορτογαλία", "Ιταλία", "Δανία", "Σουηδία", "Νορβηγία", "Φινλανδία", "Κάτω", "Τουρκία", "Κροατία "," Η Ελλάδα "," Ουγγαρία "," Ρωσία "," Τσεχική Δημοκρατία "," Σλοβακία "," Σλοβενία "," Πολωνία "," Βουλγαρία "," Αραβία "," η Κίνα "," Ιαπωνία "};
-    String[] LänderUngarn ={
-            "Németország", "England", "Franciaország", "Spanyolország", "Portugália", "Olaszország", "Dánia", "Svédország", "Norvégia", "Finnország", "Hollandia", "Törökország", "Horvátország","Görögország","Magyarország","Oroszország","Csehország","Szlovákia","Szlovénia","Kengyelország","Bulgária","Arábia","Kína","Japán"};
-    String[] LänderRussland ={"Германия", "Англия", "Франция", "Испания", "Португалия", "Италия", "Дания", "Швеция", "Норвегия", "Финляндия", "Нидерланды", "Турция", "Хорватия "," Греция "," Венгрия "," Россия "," Чехия "," Словакия "," Словения "," Польша "," Болгария "," Аравия "," Китай "," Япония "};
-    String[] LänderTschechien = {"Německo", "Anglie", "Francie", "Španělsko", "Portugalsko", "Itálie", "Dánsko", "Švédsko", "Norsko", "Finsko", "Nizozemsko", "Turecko", "Chorvatsko", "Řecko","Maďarsko","Rusko","česká republika","Slovensko","Slovinsko","Polsko","Bulharsko","Arábie","Čína","Japan"};
-    String[] LänderSlowakei ={"Nemecko", "Anglicko", "Francúzsko", "Španielsko", "Portugalsko", "Taliansko", "Dánsko", "Švédsko", "Nórsko", "Fínsko", "Holandsko", "Turecko", "Chorvátsko","Grécko","Maďarsko","Rusko"," Česká republika","Slovensko","Slovinsko","Poľsko","Bulharsko","Arábia"," Čína","Japan"};
-    String[] LänderSlowenien ={"Nemčija", "England", "Francija", "Španija", "Portugalska", "Italija", "Danska", "Švedska", "Norveška", "Finska", "Nizozemska", "Turčija", "Hrvaška","Grčija","Madžarska","Rusija"," Češka","Slovaška","Slovenija","Poljska","Bolgarija","Arabija","Kitajska","Japonska"};
-    String[] LänderPolen ={"Niemcy", "England", "Francja", "Hiszpania", "Portugalia", "Włochy", "Dania", "Szwecja", "Norwegia", "Finlandia", "Holandia", "Turcja", "Chorwacja","Grecja","Węgry","Rosja","Czechy","Słowacja","Słowenia","Polska","Bułgaria","Arabia","Chiny","Japonia"};
-    String[] LänderBulgarien ={"Германия", "Англия", "Франция", "Испания", "Руски", "Италия", "Дания", "Швеция", "Норвегия", "Финландия", "Холандия", "Турция", "Croatia"," Гърция "," Унгария "," Русия "," Чехия "," Словакия "," Словения "," Полша "," България "," Арабия "," Китай "," Япония "};
-    String[] LänderArabien ={"ألمانيا", "إنجلترا", "فرنسا", "إسبانيا", "البرتغال", "إيطاليا", "الدنمارك", "السويد", "النرويج", "فنلندا", "هولندا", "تركيا", "كرواتيا "," اليونان "," المجر "," روسيا "," جمهورية التشيك "," سلوفاكيا "," سلوفينيا "," بولندا "," بلغاريا "," العربية "," الصين "," اليابان "};
-    String[] LänderChina ={"德国","英格兰","法国","西班牙","葡萄牙","意","丹麦","瑞典","挪威","芬兰","荷兰","土耳其","克罗地亚","希腊","匈牙利","俄罗斯","捷","斯洛伐克","斯洛文尼亚","波兰","保加利亚","阿拉伯","中国","日本制造"};
-    String[] LänderJapan ={"ドイツ","イングランド","フランス","スペイン","ポルトガル","イタリア","デンマーク","スウェーデン","ノルウェー","フィンランド","オランダ","トルコ","クロアチア","ギリシャ","ハンガリー","ロシア","チェコ","スロバキア","スロベニア","ポーランド","ブルガリア","アラビア","中国","日本"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
+        DataStorage.setUpItemsByLanguage();
+
         Liste = (ListView) findViewById(R.id.ListeID);
         Items = new ArrayList<String>();
 
-        //Items.add("Test");
-        itemsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Items);
+        itemsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, Items);
         Liste.setAdapter(itemsAdapter);
+        Liste.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(MainActivity.this, AllergyListActivity.class);
+                intent.putExtra("Language", Items.get((int) l));
+                startActivity(intent);
+            }
+        });
+
+        showSecurityDialog();
         //Liste.setGravity(View.TEXT_ALIGNMENT_CENTER);
 
         //t.execute();
 
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-
-            switch (Locale.getDefault().getLanguage()) {
-                case "de":
-                    builder.setTitle("Haftungsausschluss")
-                            .setMessage("Es gibt keine Garantie, dass diese App 100% richtig ist. Durch das Nutzen dieser App akzeptierst du, dass dies kein Problem ist.")
-                            .setPositiveButton("Ich akzeptiere", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                }
-                            })
-                            .create().show();
-                    break;
-                default:
-                    builder.setTitle("Disclaimer")
-                            .setMessage("There is no warrenty that this app is 100% right. By using this app, you agree that this is no problem.")
-                            .setPositiveButton("I Agree", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                }
-                            })
-                            .create().show();
-                    break;
-
-        }
-
         setArrayListLänder();
         itemsAdapter.notifyDataSetChanged();
     }
 
+    private void showSecurityDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+
+        switch (Locale.getDefault().getLanguage()) {
+            case "de":
+                builder.setTitle("Haftungsausschluss")
+                        .setMessage("Es gibt keine Garantie, dass diese App 100% richtig ist. Durch das Nutzen dieser App akzeptierst du, dass dies kein Problem ist.")
+                        .setPositiveButton("Ich akzeptiere", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .create().show();
+                break;
+            default:
+                builder.setTitle("Disclaimer")
+                        .setMessage("There is no warrenty that this app is 100% right. By using this app, you agree that this is no problem.")
+                        .setPositiveButton("I Agree", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .create().show();
+                break;
+
+        }
+    }
 
 
-
-    void setwoRotNull(){
+    private void setwoRotNull() {
         // TODO Wenn Handy drehen, dann nicht neue Länder
-        for(int i = 0; i<woRot.length; i++){
+        for (int i = 0; i < woRot.length; i++) {
             woRot[i] = 0;
         }
     }
 
-    void setArrayListLänder(){
+    private void setArrayListLänder() {
         Items.clear();
-        setwoRotNull();
+        //setwoRotNull();
 
         //Liste.removeAllViews();
 
-        switch(Locale.getDefault().getLanguage()){
-            case "de":
-                LänderNutzer = LänderDeutschland;
-                AllergeneNutzer = AllergeneDeutschland;
-                WeiterButtonText = "Weiter";
-                UeberItemText = "Über";
-                BeendenBText = "Beenden";
-                break;
-            case "en":
-                LänderNutzer = LänderEngland;
-                AllergeneNutzer = AllergeneEngland;
-                WeiterButtonText = "Continue";
-                UeberItemText = "About";
-                BeendenBText = "Close";
-                break;
-            case "cs":
-                LänderNutzer = LänderTschechien;
-                AllergeneNutzer = AllergeneTschechien;
-                WeiterButtonText = "další";
-                UeberItemText = "o";
-                BeendenBText = "zavřít";
-                break;
-            case "fr":
-                LänderNutzer = LänderFrankreich;
-                AllergeneNutzer = AllergeneFrankreich;
-                WeiterButtonText = "plus loin";
-                UeberItemText = "sur";
-                BeendenBText = "fermer";
-                break;
-            case "es":
-                LänderNutzer = LänderSpanien;
-                AllergeneNutzer = AllergeneSpanien;
-                WeiterButtonText = "adicional";
-                UeberItemText = "Acerca de";
-                BeendenBText = "cerrar";
-                break;
-            case "pt":
-                LänderNutzer = LänderPortugal;
-                AllergeneNutzer = AllergenePortugal;
-                WeiterButtonText = "mais";
-                UeberItemText = "Cerca de";
-                BeendenBText = "desligar";
-                break;
-            case "it":
-                LänderNutzer = LänderItalien;
-                AllergeneNutzer = AllergeneItalien;
-                WeiterButtonText = "ulteriore";
-                UeberItemText = "Di";
-                BeendenBText = "fermare";
-                break;
-            case "da":
-                LänderNutzer = LänderDänemark;
-                AllergeneNutzer = AllergeneDänemark;
-                WeiterButtonText = "yderligere";
-                UeberItemText = "Ca";
-                BeendenBText = "lukke ned";
-                break;
-            case "sv":
-                LänderNutzer = LänderSchweden;
-                AllergeneNutzer = AllergeneSchweden;
-                WeiterButtonText = "ytterligare";
-                UeberItemText = "om";
-                BeendenBText = "stänga av";
-                break;
-            case "no":
-                LänderNutzer = LänderNorwegen;
-                AllergeneNutzer = AllergeneNorwegen;
-                WeiterButtonText = "videre";
-                UeberItemText = "omtrent";
-                BeendenBText = "skru av";
-                break;
-            case "fi":
-                LänderNutzer = LänderFinnland;
-                AllergeneNutzer = AllergeneFinnland;
-                WeiterButtonText = "edelleen";
-                UeberItemText = "noin";
-                BeendenBText = "sulkea";
-                break;
-            case "nl":
-                LänderNutzer = LänderNiederlande;
-                AllergeneNutzer = AllergeneNiederlande;
-                WeiterButtonText = "verder";
-                UeberItemText = "over";
-                BeendenBText = "afsluiten";
-                break;
-            case "tr":
-                LänderNutzer = LänderTürkei;
-                AllergeneNutzer = AllergeneTürkei;
-                WeiterButtonText = "ayrıca";
-                UeberItemText = "yaklaşık";
-                BeendenBText = "kapat";
-                break;
-            case "hr":
-                LänderNutzer = LänderKroatien;
-                AllergeneNutzer = AllergeneKroatien;
-                WeiterButtonText = "dalje";
-                UeberItemText = "o";
-                BeendenBText = "ugasiti";
-                break;
-            case "el":
-                LänderNutzer = LänderGriechenland;
-                AllergeneNutzer = AllergeneGriechenland;
-                WeiterButtonText = "περαιτέρω";
-                UeberItemText = "σχετικά με";
-                BeendenBText = "τέλος";
-                break;
-            case "hu":
-                LänderNutzer = LänderUngarn;
-                AllergeneNutzer = AllergeneUngarn;
-                WeiterButtonText = "további";
-                UeberItemText = "körülbelül";
-                BeendenBText = "vég";
-                break;
-            case "ru":
-                LänderNutzer = LänderRussland;
-                AllergeneNutzer = AllergeneRussland;
-                WeiterButtonText = "дальше";
-                UeberItemText = "около";
-                BeendenBText = "конец";
-                break;
-            case "sk":
-                LänderNutzer = LänderSlowakei;
-                AllergeneNutzer = AllergeneSlowakei;
-                WeiterButtonText = "ďalšie";
-                UeberItemText = "O";
-                BeendenBText = "koniec";
-                break;
-            case "sl":
-                LänderNutzer = LänderSlowenien;
-                AllergeneNutzer = AllergeneSlowenien;
-                WeiterButtonText = "nadalje";
-                UeberItemText = "O";
-                BeendenBText = "konec";
-                break;
-            case "pl":
-                LänderNutzer = LänderPolen;
-                AllergeneNutzer = AllergenePolen;
-                WeiterButtonText = "dalej";
-                UeberItemText = "O";
-                BeendenBText = "koniec";
-                break;
-            case "bg":
-                LänderNutzer = LänderBulgarien;
-                AllergeneNutzer = AllergeneBulgarien;
-                WeiterButtonText = "още";
-                UeberItemText = "около";
-                BeendenBText = "край";
-                break;
-            case "ar":
-                LänderNutzer = LänderArabien;
-                AllergeneNutzer = AllergeneArabien;
-                WeiterButtonText = "إضافي";
-                UeberItemText = "حول";
-                BeendenBText = "النهاية";
-                break;
-            case "zh":
-                LänderNutzer = LänderChina;
-                AllergeneNutzer = AllergeneChina;
-                WeiterButtonText ="进一步";
-                UeberItemText = "大约";
-                BeendenBText = "结束";
-                break;
-            case "ja":
-                LänderNutzer = LänderJapan;
-                AllergeneNutzer = AllergeneJapan;
-                WeiterButtonText = "さらに";
-                UeberItemText = "約";
-                BeendenBText = "終わり";
-                break;
-            default:
-                LänderNutzer = LänderEngland;
-                AllergeneNutzer = AllergeneEngland;
-                WeiterButtonText = "Continue";
-                UeberItemText = "About";
-                BeendenBText = "Close";
-                break;
-        }
 
-        for(String s : LänderNutzer){
+        for (String s : DataStorage.LänderNutzer) {
             Items.add(s);
         }
 
@@ -358,112 +132,109 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    void setArrayList(){
-        if(InhaltArray == 1){
+    private void setArrayList() {
+        if (InhaltArray == 1) {
             setArrayListLänder();
-        }
-        else if(InhaltArray == 2){
+        } else if (InhaltArray == 2) {
             setArrayListItems();
-        }
-        else if (InhaltArray == 3){
+        } else if (InhaltArray == 3) {
             setArrayListAusland();
         }
     }
 
-    void setArrayListAusland(){
+    private void setArrayListAusland() {
         Items.clear();
         Liste.removeAllViews();
         int id = 0;
-        switch(SpracheID){
+        switch (SpracheID) {
             case 0:
-                AllergeneAusland = AllergeneDeutschland;
+                AllergeneAusland = DataStorage.AllergeneDeutschland;
                 break;
             case 1:
-                AllergeneAusland = AllergeneEngland;
+                AllergeneAusland = DataStorage.AllergeneEngland;
                 break;
             case 2:
-                AllergeneAusland = AllergeneFrankreich;
+                AllergeneAusland = DataStorage.AllergeneFrankreich;
                 break;
             case 3:
-                AllergeneAusland = AllergeneSpanien;
+                AllergeneAusland = DataStorage.AllergeneSpanien;
                 break;
             case 4:
-                AllergeneAusland = AllergenePortugal;
+                AllergeneAusland = DataStorage.AllergenePortugal;
                 break;
             case 5:
-                AllergeneAusland = AllergeneItalien;
+                AllergeneAusland = DataStorage.AllergeneItalien;
                 break;
             case 6:
-                AllergeneAusland = AllergeneDänemark;
+                AllergeneAusland = DataStorage.AllergeneDänemark;
                 break;
             case 7:
-                AllergeneAusland = AllergeneSchweden;
+                AllergeneAusland = DataStorage.AllergeneSchweden;
                 break;
             case 8:
-                AllergeneAusland = AllergeneNorwegen;
+                AllergeneAusland = DataStorage.AllergeneNorwegen;
                 break;
             case 9:
-                AllergeneAusland = AllergeneFinnland;
+                AllergeneAusland = DataStorage.AllergeneFinnland;
                 break;
             case 10:
-                AllergeneAusland = AllergeneNiederlande;
+                AllergeneAusland = DataStorage.AllergeneNiederlande;
                 break;
             case 11:
-                AllergeneAusland = AllergeneTürkei;
+                AllergeneAusland = DataStorage.AllergeneTürkei;
                 break;
             case 12:
-                AllergeneAusland = AllergeneKroatien;
+                AllergeneAusland = DataStorage.AllergeneKroatien;
                 break;
             case 13:
-                AllergeneAusland = AllergeneGriechenland;
+                AllergeneAusland = DataStorage.AllergeneGriechenland;
                 break;
             case 14:
-                AllergeneAusland = AllergeneUngarn;
+                AllergeneAusland = DataStorage.AllergeneUngarn;
                 break;
             case 15:
-                AllergeneAusland = AllergeneRussland;
+                AllergeneAusland = DataStorage.AllergeneRussland;
                 break;
             case 16:
-                AllergeneAusland = AllergeneTschechien;
+                AllergeneAusland = DataStorage.AllergeneTschechien;
             case 17:
-                AllergeneAusland = AllergeneSlowakei;
+                AllergeneAusland = DataStorage.AllergeneSlowakei;
                 break;
             case 18:
-                AllergeneAusland = AllergeneSlowenien;
+                AllergeneAusland = DataStorage.AllergeneSlowenien;
                 break;
             case 19:
-                AllergeneAusland = AllergenePolen;
+                AllergeneAusland = DataStorage.AllergenePolen;
                 break;
             case 20:
-                AllergeneAusland = AllergeneBulgarien;
+                AllergeneAusland = DataStorage.AllergeneBulgarien;
                 break;
             case 21:
-                AllergeneAusland = AllergeneArabien;
+                AllergeneAusland = DataStorage.AllergeneArabien;
                 break;
             case 22:
-                AllergeneAusland = AllergeneChina;
+                AllergeneAusland = DataStorage.AllergeneChina;
                 break;
             case 23:
-                AllergeneAusland = AllergeneJapan;
+                AllergeneAusland = DataStorage.AllergeneJapan;
                 break;
             default:
-                AllergeneAusland = AllergeneEngland;
+                AllergeneAusland = DataStorage.AllergeneEngland;
         }
         String sPuffer = "";
-            for (String s : AllergeneAusland) {  // TODO LänderAusland
-                if (woRot[id] == 1) {
+        for (String s : AllergeneAusland) {  // TODO LänderAusland
+            if (woRot[id] == 1) {
 
-                    Items.add(s + "  (" + AllergeneNutzer[id] + ")");// TODO eigenene Ländernamen rein
-                    //TODO Farben Pastell
+                Items.add(s + "  (" + DataStorage.AllergeneNutzer[id] + ")");// TODO eigenene Ländernamen rein
+                //TODO Farben Pastell
 
-                }
-                id++;
             }
+            id++;
+        }
     }
 
 
-
-    void setArrayListItems() {
+    private void setArrayListItems() {
         Items.clear();
         setwoRotNull();
         Liste.removeAllViews();
@@ -471,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
         // TODO Mehrfachauswahl
         // TODO Sprache --> Anderes Zeug in Array
 
-        for (String s : AllergeneNutzer) {
+        for (String s : DataStorage.AllergeneNutzer) {
             Items.add(s);
         }
     }
@@ -488,12 +259,10 @@ public class MainActivity extends AppCompatActivity {
 
         if (id == R.id.action_settings) {
             return true;
-        }
-
-        else if (id == R.id.action_ueber){
+        } else if (id == R.id.action_ueber) {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 
-            builder.setTitle(UeberItemText)
+            builder.setTitle(DataStorage.UeberItemText)
                     .setMessage("Font by  Adobe: http://www.fontsquirrel.com/fonts/source-sans-pro \n Logo by")
                     .setPositiveButton("Back", new DialogInterface.OnClickListener() {
                         @Override
@@ -506,8 +275,9 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+}
 
-    class Thre extends AsyncTask<Void, Void, Void>{
+ /*   class Thre extends AsyncTask<Void, Void, Void>{
 
         @Override
         protected void onPreExecute() {
@@ -691,4 +461,4 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
-}
+}*/
