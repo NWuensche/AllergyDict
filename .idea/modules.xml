@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AllergyDict.iml" filepath="$PROJECT_DIR$/AllergyDict.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/AllergyDict.iml" filepath="$PROJECT_DIR$/.idea/modules/AllergyDict.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/AllergyDict.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/AllergyDict.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/AllergyDict.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/AllergyDict.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/AllergyDict.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/AllergyDict.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/AllergyDict.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/AllergyDict.app.unitTest.iml" />
     </modules>
   </component>
 </project>
